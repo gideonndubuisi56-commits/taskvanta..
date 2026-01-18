@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login - TaskVanta</title>
 <style>
-  body { font-family: Arial; background:#0f172a; color:#fff; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
-  .container { background:#020617; padding:30px; border-radius:12px; width:300px; text-align:center; }
-  input { width:90%; padding:10px; margin:10px 0; border-radius:6px; border:none; }
-  button { padding:10px 14px; border:none; border-radius:8px; background:#22c55e; cursor:pointer; width:95%; }
-  a { color:#22c55e; text-decoration:none; font-size:14px; display:block; margin-top:10px; }
+body { font-family: Arial; background:#0f172a; color:#fff; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+.container { background:#020617; padding:30px; border-radius:12px; width:300px; text-align:center; }
+input { width:90%; padding:10px; margin:10px 0; border-radius:6px; border:none; }
+button { padding:10px 14px; border:none; border-radius:8px; background:#22c55e; cursor:pointer; width:95%; }
+a { color:#22c55e; text-decoration:none; font-size:14px; display:block; margin-top:10px; }
 </style>
 </head>
 <body>
@@ -24,22 +24,13 @@
 <script>
 function login(){
   const username = document.getElementById('username').value.trim();
-  if(!username){
-    alert("Please enter a username!");
-    return;
-  }
+  if(!username){ alert("Please enter a username!"); return; }
 
   let users = JSON.parse(localStorage.getItem('all_users')) || [];
-  if(!users.includes(username)){
-    alert("User not found! Please register first.");
-    return;
-  }
+  if(!users.includes(username)){ alert("User not found! Please register."); return; }
 
   localStorage.setItem('tv_user', username);
-  let bal = localStorage.getItem(username+'_bal') || 0;
-  localStorage.setItem('tv_bal', bal);
-
-  // Redirect to dashboard
+  localStorage.setItem('tv_bal', localStorage.getItem(username+'_bal') || 0);
   window.location.href = "index.html";
 }
 </script>
