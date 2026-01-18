@@ -1,8 +1,3 @@
-<script>
-if(!localStorage.getItem('tv_user')){
-  window.location.href = "login.html";
-}
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,13 +9,19 @@ if(!localStorage.getItem('tv_user')){
   <style>
     body { font-family: Arial, sans-serif; background:#0f172a; color:#fff; margin:0; }
     header { padding:16px; background:#020617; text-align:center; }
-    .card { background:#020617; margin:16px; padding:16px; border-radius:12px; }
-    button { padding:10px 14px; border:none; border-radius:8px; background:#22c55e; cursor:pointer; }
+    .card { background:#020617; margin:16px; padding:16px; border-radius:12px; animation: fadeIn 0.6s ease; }
+    button { padding:10px 14px; border:none; border-radius:8px; background:#22c55e; cursor:pointer; transition: 0.3s; }
+    button:hover { transform: scale(1.05); opacity:0.9; }
     a { color:#22c55e; text-decoration:none; }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
   </style>
 </head>
 <body>
-<header><h2>TaskVanta Dashboard</h2></header>
+
+<header>
+  <h2>TaskVanta Dashboard</h2>
+  <button onclick="logout()">Logout</button>
+</header>
 
 <div class="card">
   <p><b>User:</b> <span id="user"></span></p>
@@ -34,10 +35,23 @@ if(!localStorage.getItem('tv_user')){
 </div>
 
 <script>
-  let user = localStorage.getItem('tv_user') || 'Guest';
+  // 🔒 Redirect to login if user not logged in
+  if(!localStorage.getItem('tv_user')){
+    window.location.href = "login.html";
+  }
+
+  // Load user and balance
+  let user = localStorage.getItem('tv_user');
   let bal = localStorage.getItem('tv_bal') || 0;
   document.getElementById('user').textContent = user;
   document.getElementById('bal').textContent = bal;
+
+  // Logout function
+  function logout(){
+    localStorage.removeItem('tv_user');
+    window.location.href = "login.html";
+  }
 </script>
+
 </body>
 </html>
