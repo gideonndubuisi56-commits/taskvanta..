@@ -1,43 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register - TaskVanta</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { background:#0f172a; color:#fff; font-family:Arial; }
-    .card { background:#020617; margin:40px 16px; padding:20px; border-radius:12px; }
-    input, button { width:100%; padding:12px; margin-top:12px; }
-    button { background:#22c55e; border:none; border-radius:8px; }
-    a { color:#22c55e; }
+    body { font-family: Arial; background:#0f172a; color:#fff; text-align:center; padding:50px; }
+    input, button { padding:10px; margin:10px; border-radius:6px; border:none; }
+    button { background:#22c55e; color:#fff; cursor:pointer; }
+    a { color:#22c55e; text-decoration:none; }
   </style>
 </head>
 <body>
-
-<div class="card">
-  <h2>Create Account</h2>
-  <input id="name" placeholder="Username">
-  <input id="pass" type="password" placeholder="Password">
-  <button onclick="reg()">Register</button>
-  <p>Already have account? <a href="login.html">Login</a></p>
-</div>
+<h2>Create Your Account</h2>
+<input id="user" placeholder="Username"><br>
+<input id="pass" type="password" placeholder="Password"><br>
+<button onclick="register()">Register</button>
+<p>Already have account? <a href="login.html">Login</a></p>
 
 <script>
-function reg(){
-  let n = document.getElementById('name').value;
-  let p = document.getElementById('pass').value;
+function register(){
+  const u = document.getElementById('user').value;
+  const p = document.getElementById('pass').value;
+  if(!u || !p){ alert("Fill all fields"); return; }
 
-  if(!n || !p){
-    alert("Fill all fields");
-    return;
-  }
-
-  localStorage.setItem('tv_pass_'+n, p);
-  localStorage.setItem('tv_user', n);
+  // Save user locally
+  localStorage.setItem('tv_user', u);
+  localStorage.setItem('tv_pass', p);
   localStorage.setItem('tv_bal', 0);
 
+  alert("Account created!");
   window.location.href = "index.html";
 }
 </script>
-
 </body>
 </html>
