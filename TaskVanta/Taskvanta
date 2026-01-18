@@ -1,0 +1,48 @@
+[Landing Page / Login.html]
+        |
+        |---> [Register.html] (if new user)
+        |          |
+        |          v
+        |      [index.html / Dashboard]
+        |
+        v
+[index.html / Dashboard] ---------------------------------------
+| User info: Name & Balance                                      |
+| Buttons: Logout | Install App                                   |
+| Links: Tasks | Withdraw | Referral | Admin Panel               |
+-----------------------------------------------------------------
+        |
+        |---> [tasks.html] (Complete tasks)
+        |          |
+        |          v
+        |      Balance updates (localStorage)
+        |
+        |---> [withdraw.html] (Withdraw balance)
+        |          |
+        |          v
+        |      Balance decreases after withdrawal
+        |
+        |---> [referral.html] (Invite friends)
+        |          |
+        |          v
+        |      Balance increases via referrals
+        |
+        |---> [admin.html] (Approve tasks)
+                   |
+                   v
+            Users balances updated
+        |
+        |---> [Install App Button]
+                   |
+                   v
+         Browser prompts "Add to Home Screen"
+                   |
+            -----------------
+            |               |
+         Accepted        Dismissed
+            |               |
+   App installed            Button remains visible
+   on Home Screen           for later
+            |
+            v
+[User opens app from Home Screen → Dashboard loads instantly]
