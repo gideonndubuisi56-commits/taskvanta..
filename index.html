@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TaskVanta Dashboard</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#22c55e">
 <style>
-  body { font-family: Arial; background:#0f172a; color:#fff; margin:0; }
-  header { padding:16px; background:#020617; text-align:center; }
-  .card { background:#020617; margin:16px; padding:16px; border-radius:12px; }
-  button { padding:10px 14px; border:none; border-radius:8px; background:#22c55e; cursor:pointer; }
-  a { color:#22c55e; text-decoration:none; }
+body { font-family: Arial; background:#0f172a; color:#fff; margin:0; }
+header { padding:16px; background:#020617; text-align:center; }
+.card { background:#020617; margin:16px; padding:16px; border-radius:12px; }
+button { padding:10px 14px; border:none; border-radius:8px; background:#22c55e; cursor:pointer; }
+a { color:#22c55e; text-decoration:none; }
 </style>
 </head>
 <body>
@@ -19,6 +21,7 @@
 <div class="card">
   <p><b>User:</b> <span id="user"></span></p>
   <p><b>Balance:</b> ₦<span id="bal">0</span></p>
+  <button onclick="logout()">Logout</button>
 </div>
 
 <div class="card">
@@ -29,16 +32,30 @@
 </div>
 
 <script>
-// ✅ Check if user is logged in
+// Login check
 const user = localStorage.getItem('tv_user');
 if(!user){
   alert("You must login first!");
-  window.location.href = "login.html"; // redirect to login page
+  window.location.href = "login.html";
 }
 
-// Display username and balance
 document.getElementById('user').textContent = user;
 document.getElementById('bal').textContent = localStorage.getItem('tv_bal') || 0;
+
+// Logout
+function logout(){
+  localStorage.removeItem('tv_user');
+  localStorage.removeItem('tv_bal');
+  alert("You have been logged out!");
+  window.location.href = "login.html";
+}
+
+// Register service worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log("Service Worker Registered"))
+    .catch(err => console.log("SW registration failed:", err));
+}
 </script>
 
 </body>
