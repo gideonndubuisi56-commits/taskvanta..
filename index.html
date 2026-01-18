@@ -33,12 +33,13 @@
 const user = localStorage.getItem('tv_user');
 if(!user){
   alert("You must login first!");
-  window.location.href = "login.html";
+  window.location.href = "login.html"; // redirect to login page
 }
 
-// Show username and balance
+// Display username and balance
 document.getElementById('user').textContent = user;
 document.getElementById('bal').textContent = localStorage.getItem('tv_bal') || 0;
 </script>
+
 </body>
 </html>
