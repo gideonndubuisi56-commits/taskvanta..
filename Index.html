@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskVanta</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <style>
+    body { font-family: Arial, sans-serif; background:#0f172a; color:#fff; margin:0; }
+    header { padding:16px; background:#020617; text-align:center; }
+    .card { background:#020617; margin:16px; padding:16px; border-radius:12px; }
+    button { padding:10px 14px; border:none; border-radius:8px; background:#22c55e; cursor:pointer; }
+    a { color:#22c55e; text-decoration:none; }
+  </style>
+</head>
+<body>
+<header><h2>TaskVanta Dashboard</h2></header>
+
+<div class="card">
+  <p><b>User:</b> <span id="user"></span></p>
+  <p><b>Balance:</b> ₦<span id="bal">0</span></p>
+</div>
+
+<div class="card">
+  <a href="tasks.html">Go to Tasks</a><br><br>
+  <a href="withdraw.html">Withdraw</a><br><br>
+  <a href="referral.html">Referrals</a>
+</div>
+
+<script>
+  let user = localStorage.getItem('tv_user') || 'Guest';
+  let bal = localStorage.getItem('tv_bal') || 0;
+  document.getElementById('user').textContent = user;
+  document.getElementById('bal').textContent = bal;
+</script>
+</body>
+</html>

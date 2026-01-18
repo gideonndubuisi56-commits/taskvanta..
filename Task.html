@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Tasks – TaskVanta</title></head>
+<body>
+<h2>Available Tasks</h2>
+<button onclick="earn(200)">Daily Login (+₦200)</button><br><br>
+<button onclick="earn(300)">Watch Video (+₦300)</button><br><br>
+<button onclick="earn(500)">Referral Activity (+₦500)</button>
+
+<script>
+function earn(x){
+ let b = Number(localStorage.getItem('tv_bal')||0);
+ b += x;
+ localStorage.setItem('tv_bal', b);
+ alert('Task completed!');
+}
+</script>
+</body></html>
