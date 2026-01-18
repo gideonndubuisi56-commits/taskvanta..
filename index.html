@@ -3,58 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TaskVanta Dashboard</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#22c55e">
+<title>Register - TaskVanta</title>
 <style>
-body { font-family: Arial; background:#0f172a; color:#fff; margin:0; }
-header { padding:16px; background:#020617; text-align:center; }
-.card { background:#020617; margin:16px; padding:16px; border-radius:12px; }
-button { padding:10px 14px; border:none; border-radius:8px; background:#22c55e; cursor:pointer; }
-a { color:#22c55e; text-decoration:none; }
+  body { font-family: Arial; background:#0f172a; color:#fff; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+  .form-container { background:#020617; padding:20px; border-radius:12px; width:300px; }
+  input, button { width:100%; padding:10px; margin:8px 0; border-radius:6px; border:none; }
+  button { background:#22c55e; cursor:pointer; }
 </style>
 </head>
 <body>
 
-<header><h2>TaskVanta Dashboard</h2></header>
-
-<div class="card">
-  <p><b>User:</b> <span id="user"></span></p>
-  <p><b>Balance:</b> ₦<span id="bal">0</span></p>
-  <button onclick="logout()">Logout</button>
-</div>
-
-<div class="card">
-  <a href="tasks.html">Go to Tasks</a><br><br>
-  <a href="withdraw.html">Withdraw</a><br><br>
-  <a href="referral.html">Referrals</a><br><br>
-  <a href="admin.html">Admin Panel</a>
+<div class="form-container">
+  <h2>Register</h2>
+  <input type="text" id="username" placeholder="Username" required>
+  <button onclick="register()">Register</button>
+  <p>Already have an account? <a href="login.html" style="color:#22c55e;">Login</a></p>
 </div>
 
 <script>
-// Login check
-const user = localStorage.getItem('tv_user');
-if(!user){
-  alert("You must login first!");
-  window.location.href = "login.html";
-}
+function register(){
+  const username = document.getElementById('username').value.trim();
+  if(!username){ alert("Enter username!"); return; }
 
-document.getElementById('user').textContent = user;
-document.getElementById('bal').textContent = localStorage.getItem('tv_bal') || 0;
+  // Check if user exists
+  let users = JSON.parse(localStorage.getItem('all_users')) || [];
+  if(users.includes(username)){
+    alert("Username already exists! Login instead.");
+    return;
+  }
 
-// Logout
-function logout(){
-  localStorage.removeItem('tv_user');
-  localStorage.removeItem('tv_bal');
-  alert("You have been logged out!");
-  window.location.href = "login.html";
-}
+  // Save new user
+  localStorage.setItem('tv_user', username);
+  localStorage.setItem(username+'_bal', 0);
+  users.push(username);
+  localStorage.setItem('all_users', JSON.stringify(users));
 
-// Register service worker
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js')
-    .then(() => console.log("Service Worker Registered"))
-    .catch(err => console.log("SW registration failed:", err));
+  alert("Registration successful!");
+  window.location.href = "index.html";
 }
 </script>
 
