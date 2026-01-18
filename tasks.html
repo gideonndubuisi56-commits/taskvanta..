@@ -1,17 +1,59 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><title>Tasks – TaskVanta</title></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasks - TaskVanta</title>
+<style>
+body { font-family: Arial; background:#0f172a; color:#fff; margin:0; padding:20px; }
+h2 { text-align:center; }
+.task { background:#020617; padding:16px; margin:12px 0; border-radius:12px; }
+button { padding:8px 12px; border:none; border-radius:6px; background:#22c55e; cursor:pointer; }
+</style>
+</head>
 <body>
-<h2>Available Tasks</h2>
-<button onclick="earn(200)">Daily Login (+₦200)</button><br><br>
-<button onclick="earn(300)">Watch Video (+₦300)</button><br><br>
-<button onclick="earn(500)">Referral Activity (+₦500)</button>
+
+<h2>Tasks</h2>
+
+<div id="tasksContainer"></div>
 
 <script>
-function earn(x){
- let b = Number(localStorage.getItem('tv_bal')||0);
- b += x;
- localStorage.setItem('tv_bal', b);
- alert('Task completed!');
+// Example tasks
+const tasks = [
+  {id:1, title:"Post on social media", reward:500},
+  {id:2, title:"Share referral link", reward:300},
+  {id:3, title:"Complete survey", reward:700}
+];
+
+const user = localStorage.getItem('tv_user');
+if(!user){ alert("You must login first!"); window.location.href="login.html"; }
+
+function renderTasks(){
+  const container = document.getElementById('tasksContainer');
+  container.innerHTML = '';
+  tasks.forEach(task => {
+    const div = document.createElement('div');
+    div.className = 'task';
+    div.innerHTML = `
+      <p><b>${task.title}</b> - ₦${task.reward}</p>
+      <button onclick="completeTask(${task.id})">Complete Task</button>
+    `;
+    container.appendChild(div);
+  });
 }
+
+function completeTask(id){
+  const task = tasks.find(t=>t.id===id);
+  let bal = parseInt(localStorage.getItem(user+'_bal') || 0);
+  bal += task.reward;
+  localStorage.setItem(user+'_bal', bal);
+  localStorage.setItem('tv_bal', bal);
+  alert(`Task completed! You earned ₦${task.reward}. New balance: ₦${bal}`);
+  renderTasks();
+}
+
+renderTasks();
 </script>
-</body></html>
+
+</body>
+</html>
