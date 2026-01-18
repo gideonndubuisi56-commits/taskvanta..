@@ -1,37 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - TaskVanta</title>
-  <style>
-    body { font-family: Arial; background:#0f172a; color:#fff; text-align:center; padding:50px; }
-    input, button { padding:10px; margin:10px; border-radius:6px; border:none; }
-    button { background:#22c55e; color:#fff; cursor:pointer; }
-    a { color:#22c55e; text-decoration:none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - TaskVanta</title>
+<style>
+  body { font-family: Arial; background:#0f172a; color:#fff; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
+  .container { background:#020617; padding:30px; border-radius:12px; width:300px; text-align:center; }
+  input { width:90%; padding:10px; margin:10px 0; border-radius:6px; border:none; }
+  button { padding:10px 14px; border:none; border-radius:8px; background:#22c55e; cursor:pointer; width:95%; }
+  a { color:#22c55e; text-decoration:none; font-size:14px; display:block; margin-top:10px; }
+</style>
 </head>
 <body>
-<h2>Create Your Account</h2>
-<input id="user" placeholder="Username"><br>
-<input id="pass" type="password" placeholder="Password"><br>
-<button onclick="register()">Register</button>
-<p>Already have account? <a href="login.html">Login</a></p>
+
+<div class="container">
+  <h2>Register</h2>
+  <input type="text" id="username" placeholder="Enter Username">
+  <button onclick="register()">Register</button>
+  <a href="login.html">Already have an account? Login</a>
+</div>
 
 <script>
 function register(){
-  const u = document.getElementById('user').value;
-  const p = document.getElementById('pass').value;
-  if(!u || !p){ alert("Fill all fields"); return; }
+  const username = document.getElementById('username').value.trim();
+  if(!username){
+    alert("Please enter a username!");
+    return;
+  }
 
-  // Save user locally
-  localStorage.setItem('tv_user', u);
-  localStorage.setItem('tv_pass', p);
+  let users = JSON.parse(localStorage.getItem('all_users')) || [];
+  if(users.includes(username)){
+    alert("Username already exists! Please choose another.");
+    return;
+  }
+
+  users.push(username);
+  localStorage.setItem('all_users', JSON.stringify(users));
+  localStorage.setItem(username+'_bal', 0);
+  localStorage.setItem('tv_user', username);
   localStorage.setItem('tv_bal', 0);
 
-  alert("Account created!");
+  // Redirect to dashboard
   window.location.href = "index.html";
 }
 </script>
+
 </body>
 </html>
