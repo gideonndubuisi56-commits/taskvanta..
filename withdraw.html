@@ -1,21 +1,43 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><title>Withdraw – TaskVanta</title></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Withdraw - TaskVanta</title>
+<style>
+body { font-family: Arial; background:#0f172a; color:#fff; margin:0; padding:20px; }
+h2 { text-align:center; }
+input, button { padding:10px; margin:10px 0; border-radius:6px; border:none; }
+button { background:#22c55e; cursor:pointer; }
+</style>
+</head>
 <body>
-<h2>Withdrawal Methods</h2>
-<p>Minimum Withdrawal: ₦5,000</p>
 
-<h3>Bank Transfer (Nigeria)</h3>
-<ul>
-  <li>Bank: SunTrust Bank</li>
-  <li>Account Name: Ndubuisi Gideon</li>
-  <li>Account Number: 0026140743</li>
-</ul>
+<h2>Withdraw Funds</h2>
 
-<h3>PayPal (International)</h3>
-<p>Email: gideonndubuisi56@gmail.com</p>
+<p>Your balance: ₦<span id="bal">0</span></p>
 
-<h3>Crypto (Worldwide)</h3>
-<p>USDT (TRC20 – Trust Wallet)</p>
-<p>Address: TCcUL2QXwuzL4tqRpt8tnA3DgC1ip2EZfK</p>
-<p><b>Send ONLY via TRC20</b></p>
-</body></html>
+<input type="number" id="amount" placeholder="Enter amount to withdraw">
+<button onclick="withdraw()">Withdraw</button>
+
+<script>
+const user = localStorage.getItem('tv_user');
+if(!user){ alert("Login first!"); window.location.href="login.html"; }
+
+document.getElementById('bal').textContent = localStorage.getItem(user+'_bal') || 0;
+
+function withdraw(){
+  let bal = parseInt(localStorage.getItem(user+'_bal') || 0);
+  const amt = parseInt(document.getElementById('amount').value);
+  if(!amt || amt <= 0){ alert("Enter a valid amount!"); return; }
+  if(amt > bal){ alert("Insufficient balance!"); return; }
+  bal -= amt;
+  localStorage.setItem(user+'_bal', bal);
+  localStorage.setItem('tv_bal', bal);
+  alert(`Withdrawal of ₦${amt} successful! New balance: ₦${bal}`);
+  document.getElementById('bal').textContent = bal;
+}
+</script>
+
+</body>
+</html>
