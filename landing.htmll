@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskVanta - Earn While You Complete Tasks</title>
+  <style>
+    body { font-family: Arial; background:#0f172a; color:#fff; text-align:center; padding:50px; }
+    h1 { margin-top:50px; }
+    p { margin:20px; font-size:18px; }
+    button { padding:12px 20px; border:none; border-radius:8px; background:#22c55e; color:#fff; cursor:pointer; font-size:16px; transition:0.3s; }
+    button:hover { transform:scale(1.05); opacity:0.9; }
+  </style>
+</head>
+<body>
+  <h1>Welcome to TaskVanta</h1>
+  <p>Complete tasks, earn rewards, and withdraw safely. Join thousands of users globally!</p>
+  <button onclick="window.location.href='login.html'">Get Started</button>
+</body>
+</html>
