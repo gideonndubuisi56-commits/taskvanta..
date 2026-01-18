@@ -1,0 +1,79 @@
+Html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - TaskVanta</title>
+  <style>
+    body { font-family: Arial; background:#0f172a; color:#fff; padding:20px; }
+    h2 { text-align:center; }
+    table { width:100%; border-collapse: collapse; margin-top:20px; }
+    th, td { padding:12px; border:1px solid #fff; text-align:center; }
+    button { padding:6px 12px; border:none; border-radius:6px; cursor:pointer; background:#22c55e; color:#fff; transition:0.3s; }
+    button:hover { opacity:0.8; }
+  </style>
+</head>
+<body>
+<h2>Admin Panel - Task Approvals</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Balance (₦)</th>
+      <th>Approve Task</th>
+      <th>Reset Balance</th>
+    </tr>
+  </thead>
+  <tbody id="userTable">
+    <!-- Users will appear here -->
+  </tbody>
+</table>
+
+<script>
+// Example: load users from localStorage
+let users = JSON.parse(localStorage.getItem('all_users')) || [];
+
+// Add current registered user if exists
+const currentUser = localStorage.getItem('tv_user');
+if(currentUser && !users.includes(currentUser)){
+  users.push(currentUser);
+  localStorage.setItem('all_users', JSON.stringify(users));
+}
+
+// Build table
+function renderTable(){
+  const tbody = document.getElementById('userTable');
+  tbody.innerHTML = '';
+  users.forEach(u => {
+    const bal = localStorage.getItem(u+'_bal') || localStorage.getItem('tv_bal') || 0;
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${u}</td>
+      <td>₦${bal}</td>
+      <td><button onclick="approveTask('${u}')">Approve +500</button></td>
+      <td><button onclick="resetBalance('${u}')">Reset</button></td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+function approveTask(u){
+  let bal = parseInt(localStorage.getItem(u+'_bal') || localStorage.getItem('tv_bal') || 0);
+  bal += 500; // task reward
+  localStorage.setItem(u+'_bal', bal);
+  alert(`${u} approved! New balance: ₦${bal}`);
+  renderTable();
+}
+
+function resetBalance(u){
+  localStorage.setItem(u+'_bal', 0);
+  alert(`${u}'s balance reset`);
+  renderTable();
+}
+
+renderTable();
+</script>
+</body>
+</html>
